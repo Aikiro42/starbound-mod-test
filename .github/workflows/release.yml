@@ -22,7 +22,10 @@ jobs:
       - name: What is the version tag?
         run: |
           echo ${{github.ref_name}}
-      - name: Create release
+      - name: What is the version tag?
+        run: |
+          dir
+      - name: Upload Files to Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
