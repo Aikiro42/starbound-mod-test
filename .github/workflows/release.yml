@@ -19,8 +19,13 @@ jobs:
           input: .
           config: .github/tools/packing.config
           output: test-$tag.pak
+      - name: What is the version tag?
+        env:
+          tag: ${{ github.ref_name }}
+        run: |
+          echo $tag
       - name: Create release
         env:
           tag: ${{ github.ref_name }}
         run: |
-          gh release upload $tag ./*.pak
+          gh release upload $tag ./*.pak --clobber
