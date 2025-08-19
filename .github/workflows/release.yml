@@ -2,8 +2,9 @@ name: Create Release
 run-name: Packing & Releasing
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - "main"
+      - "release/**"
 jobs:
   build:
     runs-on: windows-latest
