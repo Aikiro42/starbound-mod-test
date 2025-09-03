@@ -21,9 +21,11 @@ jobs:
           fetch-depth: 0
 
       - name: Configure Git
-        run: |
-          git config user.name "Aikiro42-GHA"
-          git config user.email "hiroku042+github-actions@gmail.com"
+        uses: nodef/git-config.action@v1.0.0
+        with:
+          credentials: |-
+            github.com=${{secrets.GITHUB_TOKEN}}
+            gist.github.com=${{secrets.GITHUB_TOKEN}}
 
       - name: Fetch branches
         run: |
