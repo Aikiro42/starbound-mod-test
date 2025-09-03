@@ -10,7 +10,8 @@ on:
       - "feature/**"
       - "docs/**"
       - "dev/**"
-
+permissions:
+  contents: write
 jobs:
   rebuild-test:
     runs-on: ubuntu-latest
