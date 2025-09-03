@@ -3,13 +3,13 @@ name: Rebuild test branch
 on:
   push:
     branches:
-      - "change/*"
-      - "bugfix/*"
-      - "hotfix/*"
-      - "feat/*"
-      - "feature/*"
-      - "docs/*"
-      - "dev/*"
+      - "change/**"
+      - "bugfix/**"
+      - "hotfix/**"
+      - "feat/**"
+      - "feature/**"
+      - "docs/**"
+      - "dev/**"
 
 jobs:
   rebuild-test:
