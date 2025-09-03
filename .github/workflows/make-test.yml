@@ -29,9 +29,9 @@ jobs:
       
       - name: Configure Git
         run: |
-          git config user.name "Aikiro42-GHA"
-          git config user.email "hiroku042+starbound-mod-test-GHA@gmail.com"
-          
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                    
       - name: Fetch branches
         run: |
           git fetch origin wip/experimental
