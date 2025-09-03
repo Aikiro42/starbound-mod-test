@@ -1,0 +1,57 @@
+name: Rebuild test branch
+
+on:
+  push:
+    branches:
+      - "change/*"
+      - "bugfix/*"
+      - "hotfix/*"
+      - "feat/*"
+      - "feature/*"
+      - "docs/*"
+      - "dev/*"
+
+jobs:
+  rebuild-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "Aikiro42-GHA"
+          git config user.email "hiroku042+github-actions@gmail.com"
+
+      - name: Fetch branches
+        run: |
+          git fetch origin wip/experimental
+          git fetch --prune --all
+
+      - name: Reset test from wip/experimental
+        run: |
+          git checkout wip/experimental
+          git branch -D test || true
+          git checkout -B test
+
+      - name: Merge all dev/* into test
+        run: |
+          set -e
+          for branch in $(git branch -r | grep "origin/dev/" | sed 's|origin/||'); do
+            echo "Merging $branch into test..."
+            if ! git merge --no-ff origin/$branch -m "Merge $branch into test"; then
+              echo "Merge conflict in $branch!"
+              echo "Conflicting files:"
+              git diff --name-only --diff-filter=U
+              # Reset test back to wip/experimental
+              git reset --hard origin/wip/experimental
+              exit 1
+            fi
+          done
+
+      - name: Push new test branch
+        if: success()
+        run: |
+          git push origin test --force
